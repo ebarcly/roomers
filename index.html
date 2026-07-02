@@ -3,19 +3,155 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Roomers — Cozy Murder Logic</title>
+  <title>Roomers — A cozy murder-mystery logic puzzle for iPhone</title>
+  <meta name="description" content="Roomers is a cozy murder-mystery logic puzzle. Place every suspect, follow the clues, and name the killer. A free Daily Case every day. No guessing, ever.">
+  <meta property="og:title" content="Roomers — Cozy Murder Logic">
+  <meta property="og:description" content="Every room has a story. One hides a killer. A free Daily Case every day — no guessing, ever.">
+  <meta property="og:image" content="https://ebarcly.github.io/roomers/img/icon.png">
+  <meta property="og:url" content="https://ebarcly.github.io/roomers/">
+  <link rel="icon" type="image/png" href="img/icon.png">
   <style>
-    body { font-family: Georgia, 'Times New Roman', serif; max-width: 640px;
-           margin: 48px auto; padding: 0 20px; color: #2B2520; background: #F4EFE6; line-height: 1.6; text-align: center; }
-    h1 { font-size: 2rem; letter-spacing: 0.06em; }
-    .tagline { font-style: italic; color: #8A8071; }
-    a { color: #A8442E; }
+    /* Palette lifted from the app (App/Theme/Palette.swift) */
+    :root {
+      --paper: #F7F1E5;
+      --paper-raised: #FFFBF2;
+      --ink: #2B2723;
+      --ink-faint: #8A8174;
+      --rule: #E0D6C4;
+      --seal: #B5402E;      /* wax-seal red — stamps only */
+      --forest: #3D6B53;
+      --navy: #3E5C8A;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --paper: #1C1A17;
+        --paper-raised: #262320;
+        --ink: #EDE6D9;
+        --ink-faint: #9A9184;
+        --rule: #3E3931;
+        --seal: #D86A57;
+        --forest: #7FB78F;
+        --navy: #93ACD1;
+      }
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      max-width: 760px; margin: 48px auto; padding: 0 20px;
+      color: var(--ink); background: var(--paper); line-height: 1.6;
+    }
+    header { text-align: center; }
+    .icon {
+      width: 128px; height: 128px; border-radius: 29px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+    }
+    h1 {
+      font-size: 2.4rem; letter-spacing: 0.12em; text-transform: uppercase;
+      margin: 0.9rem 0 0.2rem; font-weight: 700;
+    }
+    .subtitle { color: var(--ink-faint); font-size: 1.05rem; margin: 0; }
+    .tagline { font-style: italic; font-size: 1.15rem; margin: 1.2rem 0 0.4rem; }
+    .badge { display: inline-block; margin-top: 1rem; }
+    .badge img { height: 60px; display: block; }
+    .badge .badge-white { display: none; }
+    @media (prefers-color-scheme: dark) {
+      .badge .badge-black { display: none; }
+      .badge .badge-white { display: block; }
+    }
+    .shots {
+      display: flex; gap: 16px; margin: 2.6rem -20px;
+      padding: 6px 20px 14px;
+      overflow-x: auto; -webkit-overflow-scrolling: touch;
+      scroll-snap-type: x mandatory;
+    }
+    .shots img {
+      width: 232px; flex-shrink: 0; scroll-snap-align: center;
+      border-radius: 20px; border: 1px solid var(--rule);
+      box-shadow: 0 8px 22px rgba(43,39,35,0.22);
+      background: var(--paper-raised);
+    }
+    @media (min-width: 800px) { .shots { justify-content: center; overflow-x: visible; } }
+    h2 {
+      font-size: 1.05rem; letter-spacing: 0.14em; text-transform: uppercase;
+      color: var(--ink); margin-top: 2.6rem;
+      border-bottom: 2px solid var(--rule); padding-bottom: 0.35rem;
+    }
+    .features {
+      display: grid; gap: 14px; padding: 0; margin: 1.2rem 0; list-style: none;
+    }
+    @media (min-width: 620px) { .features { grid-template-columns: 1fr 1fr; } }
+    .features li {
+      background: var(--paper-raised); border: 1px solid var(--rule);
+      border-radius: 12px; padding: 14px 16px;
+    }
+    .features strong { display: block; margin-bottom: 2px; color: var(--forest); }
+    .unlimited {
+      background: var(--paper-raised); border: 1px solid var(--rule);
+      border-radius: 12px; padding: 18px 20px; margin: 1.2rem 0;
+    }
+    .unlimited .stamp {
+      display: inline-block; color: var(--seal); border: 2px solid var(--seal);
+      border-radius: 6px; padding: 1px 10px; margin: 0 0 0.5rem;
+      font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase;
+      font-size: 0.85rem; transform: rotate(-1.5deg);
+    }
+    .unlimited ul { margin: 0.4rem 0 0; padding-left: 1.2rem; }
+    footer {
+      margin-top: 3rem; padding-top: 1.2rem; border-top: 1px solid var(--rule);
+      color: var(--ink-faint); font-size: 0.9rem; text-align: center;
+    }
+    footer a { color: var(--ink-faint); }
+    a { color: var(--navy); }
   </style>
 </head>
 <body>
-  <h1>ROOMERS</h1>
-  <p class="tagline">Every room has a story. One hides a killer.</p>
-  <p>A cozy murder-mystery logic puzzle for iPhone.</p>
-  <p><a href="privacy.html">Privacy Policy</a> · <a href="support.html">Support</a></p>
+  <header>
+    <img class="icon" src="img/icon.png" alt="Roomers app icon" width="128" height="128">
+    <h1>Roomers</h1>
+    <p class="subtitle">A cozy murder-mystery logic puzzle for iPhone</p>
+    <p class="tagline">Every room has a story. One hides a killer.</p>
+    <a class="badge" href="https://apps.apple.com/app/id6779009687">
+      <img class="badge-black" src="img/app-store-badge.svg" alt="Download on the App Store">
+      <img class="badge-white" src="img/app-store-badge-white.svg" alt="Download on the App Store">
+    </a>
+  </header>
+
+  <div class="shots">
+    <img src="img/shot-home.png" alt="Home screen with the Daily Case" loading="lazy">
+    <img src="img/shot-game.png" alt="A case mid-solve: suspects placed on a floor plan" loading="lazy">
+    <img src="img/shot-win.png" alt="Case solved — the killer accused" loading="lazy">
+  </div>
+
+  <p>Each case is a crime scene: a floor plan divided into rooms, furnished with
+     tables, chairs, and secrets. Place every suspect so each row and column holds
+     exactly one person, follow each suspect's clue, and when the board is solved —
+     accuse. The murderer is whoever ends up alone in a room with the victim.</p>
+
+  <h2>Why detectives stay</h2>
+  <ul class="features">
+    <li><strong>No guessing, ever.</strong> Every case has exactly one solution,
+        provable by pure deduction.</li>
+    <li><strong>The Daily Case — free.</strong> One fresh case a day, the same for
+        every detective in the world. Build a streak. Defend it.</li>
+    <li><strong>41 hand-checked case files.</strong> From gentle 6×6 warm-ups to
+        expert 8×8 brain-benders, across twenty themed locales.</li>
+    <li><strong>Designed for comfort.</strong> Pencil notes, auto-marking, undo,
+        haptics, full dark mode, Dynamic Type and VoiceOver support.</li>
+  </ul>
+
+  <h2>Roomers Unlimited</h2>
+  <div class="unlimited">
+    <span class="stamp">One purchase, yours forever</span>
+    <ul>
+      <li>Endless cases: a brand-new, never-before-seen mystery on demand, at any difficulty.</li>
+      <li>The Daily Case archive: reopen every daily you missed.</li>
+      <li>No subscription. No account. No ads. Works completely offline.</li>
+    </ul>
+  </div>
+
+  <footer>
+    <p><a href="support.html">Support</a> · <a href="privacy.html">Privacy Policy</a></p>
+    <p>© 2026 Enrique Barclay. Apple, the Apple logo, and App Store are trademarks of Apple Inc.</p>
+  </footer>
 </body>
 </html>
